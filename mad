@@ -1,0 +1,80 @@
+#!/usr/bin/env python
+"""
+Main executable for MAD - a poor man's metadata manager
+
+Copyright 2011 Mark Fiers, Plant & Food Research
+
+"""
+import os
+import sys
+import logging
+import argparse
+
+from madpy.logger import G
+from madpy import plugin
+
+COMMAND = None
+COMMAND_MODULE = None
+PARSER = None
+ARGS = None
+
+
+def execute_command_hook(module, command, *args, **kwargs):
+    if not 'hook_%s' % command in dir(module):
+        G.debug("undefined hook %s for command module" % command)
+        return False
+
+    return module.__dict__['hook_%s' % command](*args, **kwargs)
+
+if __name__ == "__main__":
+
+    #check if the command is called with an argument
+    if len(sys.argv) == 1 or \
+        sys.argv[1] == '--help':
+        print "Usage: %s <COMMAND> ..." % os.path.basename(sys.argv[0])
+        print "(try:  %s help)" % os.path.basename(sys.argv[0])
+        sys.exit(-1)
+
+    #what is the command to execute?
+    COMMAND = sys.argv[1]
+
+    #early verbosity set
+    if '-vv' in " ".join(sys.argv):
+        G.setLevel(logging.DEBUG)
+    elif '-v' in sys.argv:
+        G.setLevel(logging.INFO)
+
+    #define the argument parser
+    PARSER = argparse.ArgumentParser()
+    PARSER.add_argument('-v', dest='verbose', action="count",
+                        help='Show debug information')
+
+    PARSER.add_argument('command', help='this command', metavar=COMMAND)
+
+    plugin.init()
+
+    #try to import the module corresponding to the "command"
+    try:
+        COMMAND_MODULE = __import__('madpy.command.%s' % COMMAND,
+                         globals(), locals(), [COMMAND], -1)
+    except:
+        G.critical("Cannot import command.%s" % COMMAND)
+        G.critical("It is possibly that '%s' is not implemented" % COMMAND)
+        raise
+
+    #define command specific arguments & interpret arguments
+    execute_command_hook(COMMAND_MODULE, 'define_args', PARSER)
+
+    plugin.run('define_args', PARSER)
+    ARGS = PARSER.parse_args()
+
+    #set the verbosity
+    if ARGS.verbose >= 2:
+        G.setLevel(logging.DEBUG)
+    elif ARGS.verbose == 1:
+        G.setLevel(logging.INFO)
+
+    #and run!
+    G.info("start %s.run" % COMMAND)
+    COMMAND_MODULE.run(ARGS)
+

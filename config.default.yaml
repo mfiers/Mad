@@ -1,0 +1,23 @@
+general:
+  config_dir: /home/mf/project/mad/data
+plugins: []
+#  - yourlgid
+ontologies:
+  url:
+    plant_ontology : "http://palea.cgrb.oregonstate.edu/viewsvn/Poc/tags/live/plant_ontology.obo?view=co"
+    edam_ontology: "http://edamontology.org/ontology?format=obo"
+  edam_format:
+    parent_id: "EDAM_format:1915 edam"
+  edam_coredata:
+    parent_id: "EDAM_data:3031 edam"
+smw:
+  https: false
+  host: "localhost"
+  path: "/w/"
+localgid:
+  keylen: 5
+  gidfile: /home/mf/project/mad/data/gid
+  base: ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789
+yourlgid:
+  server: 'http://10.19.4.29:8006/yourls.php?format=json&data='
+  idform: 'mad/%s'

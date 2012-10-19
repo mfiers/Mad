@@ -1,0 +1,85 @@
+AttachedFile:
+  help: Copy of the file, uploaded to SMW during sync
+DataFormat:
+  help: File format, corresponds to Edam fomats
+  mad_data_type: edam_format_name
+DataType:
+  help: Data type, corresponds to Edam core data 
+  mad_data_type: edam_coredata
+EdamDataFormatId:
+  help: Edam data format identifier
+  smw_data_type: String
+  mad_data_type: string
+EdamDataTypeId:
+  help: Edam core data identifier corresponding to DataType
+  mad_data_type: string
+  smw_data_type: String
+Organism:
+  help: Organism name - should conform to the NCBI taxonomy
+  mad_data_type: taxonomy_name
+NcbiTaxonomyId:
+  help: NCBI Taxonomy ID
+  mad_data_type: integer
+  smw_data_type: Number
+Description:
+  help: A short description
+  smw_data_type: String
+FileLocation:
+  help: The path to the file
+  smw_data_type: String  
+FileSize:
+  help: Size (in bytes) of the file
+  mad_data_type: integer
+  smw_data_type: Number
+Project:
+  help: Project for which this data was generated
+ProjectNumber:
+  help: Project number for the project generating the data
+  smw_data_type: String
+Bioinformatician:
+  help: the bioinformatician responsible for this data
+Biologist:
+  help: The biologist responsible for this data 
+PlantTissue:
+  help: Plant tissue type - use the plant ontology!
+  url: "http://www.obofoundry.org/cgi-bin/detail.cgi?id=po_anatomy"
+  mad_data_type: plant_ontology_name
+PlantTissuePoId:
+  help: Tissue type - use the plant ontology!
+  mad_data_type: integer
+  smw_data_type: Number
+Variant:
+  help: clone variant, cultivar, etc
+LastModified:
+  help: Last modification date of this file
+  smw_data_type: Date
+Sha1sum:
+  help: Sha1sum hash
+  smw_data_type: String
+Hostname:
+  help: Name of the hosting server
+Gid:
+  help: Global unique ID
+GeoLocation:
+  help: Geographical location where the material was sampled
+Compressed:
+  help: "Is this file compressed? Specify the format if it is (gz, zip, bz2, tar.gz, etc). Assumed uncompressed if this field is not specified"
+PfamAccessionNumber:
+  help: Pfam accession number associated with this file
+  mad_data_type: string 
+  smw_data_type: String
+TFFamily:
+  help: Transcription factor family
+  smw_data_type: String
+TFSubFamily:
+  help: Transcription factor sub family
+  mad_data_type: string
+  smw_data_type: String
+gid:
+  help: Globally unique id for this file
+  mad_data_type: string
+  smw_data_type: String
+XRef:
+  help: Cross reference. If internally
+  mad_data_type: set_string
+  smw_data_type: String
